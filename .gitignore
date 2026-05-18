@@ -3,9 +3,6 @@
 venv/
 env/
 
-# Allure-отчёты
-allure_results/
-
 # Кэш Python
 __pycache__/
 *.py[cod]
