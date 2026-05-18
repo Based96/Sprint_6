@@ -1,0 +1,24 @@
+# Виртуальное окружение
+.venv/
+venv/
+env/
+
+# Allure-отчёты
+allure_results/
+
+# Кэш Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Кэш pytest
+.pytest_cache/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Файлы ОС
+.DS_Store
+Thumbs.db
