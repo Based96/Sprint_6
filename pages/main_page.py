@@ -1,9 +1,6 @@
 from pages.base_page import BasePage
 from locators.main_page_locators import MainPageLocators
 from urls import Urls
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
 
 class MainPage(BasePage):
     def __init__(self, driver):
@@ -46,15 +43,12 @@ class MainPage(BasePage):
         question_locator = self.get_question_locator(index)
         question = self.find_element(question_locator)
         self.driver.execute_script("arguments[0].scrollIntoView(true);", question)
-        WebDriverWait(self.driver, 3).until(
-            EC.element_to_be_clickable(question_locator))
-        self.click(question_locator)
+        self.wait_for_visibility(question_locator, timeout=3)
         self.click(question_locator)
 
     def get_answer_text(self, index):
         answer_locator = self.get_answer_locator(index)
-        answer = WebDriverWait(self.driver, 5).until(
-            EC.visibility_of_element_located(answer_locator))
+        answer = self.wait_for_visibility(answer_locator, timeout=5)
         return answer.text
 
     def click_order_button_top(self):
@@ -69,6 +63,3 @@ class MainPage(BasePage):
 
     def click_logo_yandex(self):
         self.click(MainPageLocators.LOGO_YANDEX)
-
-    def get_current_url(self):
-        return self.driver.current_url

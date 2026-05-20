@@ -1,7 +1,5 @@
 from pages.base_page import BasePage
 from locators.order_page_locators import OrderPageLocators
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 
@@ -21,11 +19,9 @@ class OrderPage(BasePage):
         metro_input.click()
         metro_input.send_keys(metro_station)
         # Ждём появления выпадающего списка и кликаем
-        metro_option = WebDriverWait(self.driver, 5).until(
-            EC.element_to_be_clickable(OrderPageLocators.METRO_STATION_OPTION))
-        metro_option.click()
+        self.click(OrderPageLocators.METRO_STATION_OPTION, timeout=5)
         # Телефон
-        self.find_element(OrderPageLocators.PHONE_INPUT).send_keys(phone)
+        self.send_keys(OrderPageLocators.PHONE_INPUT, phone)
         # Далее
         self.click(OrderPageLocators.NEXT_BUTTON)
 
@@ -37,8 +33,7 @@ class OrderPage(BasePage):
         # Срок аренды
         self.click(OrderPageLocators.RENTAL_PERIOD_DROPDOWN)
         # Ждём появления списка опций и кликаем нужную
-        options = WebDriverWait(self.driver, 5).until(
-            EC.presence_of_all_elements_located(OrderPageLocators.RENTAL_PERIOD_OPTION))
+        options = self.find_elements(OrderPageLocators.RENTAL_PERIOD_OPTION, timeout=5)
         options[rental_period].click()
         # Цвет
         if color == "black":
@@ -47,7 +42,7 @@ class OrderPage(BasePage):
             self.click(OrderPageLocators.COLOR_GREY)
         # Комментарий
         if comment:
-            self.find_element(OrderPageLocators.COMMENT_INPUT).send_keys(comment)
+            self.send_keys(OrderPageLocators.COMMENT_INPUT, comment)
         # Кнопка «Заказать»
         self.click(OrderPageLocators.ORDER_BUTTON)
 
@@ -55,4 +50,4 @@ class OrderPage(BasePage):
         self.click(OrderPageLocators.CONFIRM_YES_BUTTON)
 
     def is_success_window_displayed(self):
-        return self.find_element(OrderPageLocators.SUCCESS_HEADER).is_displayed()
+        return self.is_element_displayed(OrderPageLocators.SUCCESS_HEADER)

@@ -3,15 +3,18 @@ import allure
 from pages.main_page import MainPage
 from pages.order_page import OrderPage
 from urls import Urls
-
+from data import OrderData
 
 class TestOrder:
 
     @pytest.mark.parametrize("name, surname, address, metro_station, phone, date, rental_period, color, comment", [
-        ("Игорь", "Иванов", "ул. Селезнева, д. 1", "Курская", "89001234567", "15.05.2026", 1, "black", "Позвонить за час"),
-        ("Вероника", "Иванова", "ул. Ставропольская, д. 100", "Речной Вокзал", "89007654321", "20.05.2026", 3, "grey", ""),])
+        (OrderData.NAME_1, OrderData.SURNAME_1, OrderData.ADDRESS_1, OrderData.METRO_STATION_1, OrderData.PHONE_1,
+         OrderData.DATE_1, OrderData.RENTAL_PERIOD_1, OrderData.COLOR_1, OrderData.COMMENT_1),
+        (OrderData.NAME_2, OrderData.SURNAME_2, OrderData.ADDRESS_2, OrderData.METRO_STATION_2, OrderData.PHONE_2,
+         OrderData.DATE_2, OrderData.RENTAL_PERIOD_2, OrderData.COLOR_2, OrderData.COMMENT_2),])
     @allure.title("Заказ самоката через кнопку вверху страницы")
     @allure.description("Проверка полного позитивного сценария заказа самоката с разными данными")
+
     def test_order_top_button(self, driver, name, surname, address, metro_station, phone, date, rental_period, color, comment):
         main_page = MainPage(driver)
         order_page = OrderPage(driver)
@@ -27,8 +30,10 @@ class TestOrder:
         assert order_page.is_success_window_displayed()
 
     @pytest.mark.parametrize("name, surname, address, metro_station, phone, date, rental_period, color, comment", [
-        ("Игорь", "Иванов", "ул. Селезнева, д. 1", "Курская", "89001234567", "15.05.2026", 1, "black", "Позвонить за час"),
-        ("Вероника", "Петрова", "ул. Ставропольская, д. 10", "Речной вокзал", "89007654321", "20.05.2026", 3, "grey", ""),])
+        (OrderData.NAME_1, OrderData.SURNAME_1, OrderData.ADDRESS_1, OrderData.METRO_STATION_1, OrderData.PHONE_1,
+         OrderData.DATE_1, OrderData.RENTAL_PERIOD_1, OrderData.COLOR_1, OrderData.COMMENT_1),
+        (OrderData.NAME_2, OrderData.SURNAME_2, OrderData.ADDRESS_2, OrderData.METRO_STATION_2, OrderData.PHONE_2,
+         OrderData.DATE_2, OrderData.RENTAL_PERIOD_2, OrderData.COLOR_2, OrderData.COMMENT_2),])
     @allure.title("Заказ самоката через кнопку внизу страницы")
     @allure.description("Проверка полного позитивного сценария заказа самоката с разными данными через нижнюю кнопку")
     def test_order_bottom_button(self, driver, name, surname, address, metro_station, phone, date, rental_period, color, comment):
